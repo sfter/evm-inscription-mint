@@ -5,7 +5,7 @@ const config = require("./config")
 const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
 
 // 创建钱包
-const wallet = new ethers.Wallet(config.privateKey, provider);
+const wallet = new ethers.Wallet(config.privateKey.trim(), provider);
 
 // 转成16进制
 const convertToHexa = (str = '') =>{
