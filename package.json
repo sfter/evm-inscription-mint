@@ -1,0 +1,14 @@
+{
+  "name": "automint",
+  "version": "1.0.0",
+  "description": "**1. 下载Node.JS软件：**\r ```\r https://nodejs.org/en\r ```\r **2. 下载VS Code：**\r ```\r https://code.visualstudio.com/download\r ```\r **3. 在终端安装ethers模块：**\r ```\r npm install ethers\r ```\r **4. 修改程序参数：**",
+  "main": "autoMint.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ethers": "^5.7.2"
+  }
+}
