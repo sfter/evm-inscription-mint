@@ -1,43 +1,11 @@
 const { ethers } = require("ethers");
-
-
-
-// ================================ 以下参数配置，自行修改 ========================
-// 配置你的私钥和目标地址
-const privateKey = ""; 
-
-// 接收地址（跟私钥绑定的钱包地址）
-const toAddress = ""; 
-
-// 铭文json数据（替换成你想打的铭文json格式数据）
-const tokenJson = 'data:,{"p":"fair-20","op":"mint","tick":"fair","amt":"1000"}';
-
-// 你想要打多少张，这里就设置多少，建议单次别超过50，不然容易不上链
-const repeatCount = 1; 
-
-// RPC结点（兼容 evm 链都行）打哪条链就用哪条链的节点地址
-// eth =>  https://mainnet.infura.io/v3
-// arb => https://arb1.arbitrum.io/rpc
-// polygon => https://polygon-rpc.com
-// op => https://mainnet.optimism.io
-// linea => https://mainnet.infura.io/v3
-// scroll => https://rpc.scroll.io
-// zks => https://mainnet.era.zksync.io
-const rpcUrl = "https://arb1.arbitrum.io/rpc"
-
-// 限制gasLimit，根据当前网络转账的设置，不知道设置多少的去区块浏览器看别人转账成功的是多少	
-const gasLimit = 1066989
-// ================================ 以上是参数配置，自行修改 ========================
-
-
-
-
+const config = require("./config")
 
 // 连接到结点
-const provider = new ethers.providers.JsonRpcProvider(rpcUrl); 
+const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
 
 // 创建钱包
-const wallet = new ethers.Wallet(privateKey, provider);
+const wallet = new ethers.Wallet(config.privateKey, provider);
 
 // 转成16进制
 const convertToHexa = (str = '') =>{
@@ -68,11 +36,32 @@ async function getGasPrice() {
   return gasPrice;
 }
 
+// 获取链上实时 gasLimit
+async function getGasLimit(hexData, address) {
+  const gasLimit = await provider.estimateGas({
+    to: address,
+    value: ethers.utils.parseEther("0"),
+    data: hexData,
+  });
+
+  return gasLimit.toNumber();
+}
+
 // 转账交易
-async function sendTransaction(nonce, gasPrice) {
-  const hexData	= convertToHexa(tokenJson);
+async function sendTransaction(nonce) {
+  const hexData	= convertToHexa(config.tokenJson);
+  // 获取实时 gasPrice
+  const currentGasPrice = await getGasPrice();
+  // 在当前 gasPrice 上增加 一定倍数
+  const gasMultiple = parseInt(String(config.increaseGas * 100))
+  const increasedGasPrice = currentGasPrice.div(100).mul(gasMultiple);
+  // 获取钱包地址
+  const address = await wallet.getAddress();
+  // 获取当前 gasLimit 限制
+  const gasLimit = await getGasLimit(hexData, address);
+
   const transaction = {
-    to: toAddress,
+    to: address,
 	// 替换为你要转账的金额
     value: ethers.utils.parseEther("0"),
     // 十六进制数据
@@ -80,7 +69,7 @@ async function sendTransaction(nonce, gasPrice) {
     // 设置 nonce
     nonce: nonce,
     // 设置 gas 价格
-    gasPrice: gasPrice,
+    gasPrice: increasedGasPrice,
 	// 限制gasLimit，根据当前网络转账的设置，不知道设置多少的去区块浏览器看别人转账成功的是多少	
     gasLimit: gasLimit,
   };
@@ -98,7 +87,7 @@ async function sendTransactions() {
   const currentNonce = await getCurrentNonce(wallet);
   const gasPrice = await getGasPrice();
 
-  for (let i = 0; i < repeatCount; i++) {
+  for (let i = 0; i < config.repeatCount; i++) {
     await sendTransaction(currentNonce + i, gasPrice);
   }
 }
