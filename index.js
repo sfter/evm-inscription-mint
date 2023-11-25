@@ -49,7 +49,7 @@ async function getGasLimit(hexData, address) {
 
 // 转账交易
 async function sendTransaction(nonce) {
-  const hexData	= convertToHexa(config.tokenJson);
+  const hexData	= convertToHexa(config.tokenJson.trim());
   // 获取实时 gasPrice
   const currentGasPrice = await getGasPrice();
   // 在当前 gasPrice 上增加 一定倍数
