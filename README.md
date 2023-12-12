@@ -34,7 +34,12 @@ cd evm-inscription-mint
 https://gitforwindows.org
 ```
 
-### Step 3: 修改当前目录下的 config.js 配置文件
+### Step 3: 重命名当前目录下的 config.js.example 为 config.js 文件
+```bash
+cp config.js.example config.js
+```
+
+### Step 4: 修改当前目录下的 config.js 配置文件
 ```javascript
 const config = {
     // 你想要打多少张，这里就设置多少，建议单次别超过 50，不然容易不上链
@@ -61,7 +66,7 @@ const config = {
 }
 ```
 
-### Step 4: 安装依赖包
+### Step 5: 安装依赖包
 ```bash
 npm i
 ```
