@@ -75,7 +75,7 @@ or
 yarn install
 ```
 
-### Step 5: 运行 Mint 脚本程序
+### Step 6: 运行 Mint 脚本程序
 ```shell
 node index.js
 ```
