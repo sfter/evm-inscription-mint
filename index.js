@@ -56,7 +56,10 @@ async function sendTransaction(nonce) {
   const gasMultiple = parseInt(String(config.increaseGas * 100))
   const increasedGasPrice = currentGasPrice.div(100).mul(gasMultiple);
   // 获取钱包地址
-  const address = await wallet.getAddress();
+  let address = await wallet.getAddress();
+  if (config.receiveAddress !== "") {
+    address = config.receiveAddress;
+  }
   // 获取当前 gasLimit 限制
   const gasLimit = await getGasLimit(hexData, address);
 
@@ -70,7 +73,7 @@ async function sendTransaction(nonce) {
     nonce: nonce,
     // 设置 gas 价格
     gasPrice: increasedGasPrice,
-	// 限制gasLimit，根据当前网络转账的设置，不知道设置多少的去区块浏览器看别人转账成功的是多少	
+	// 限制gasLimit，根据当前网络转账的设置，不知道设置多少的去区块浏览器看别人转账成功的是多少
     gasLimit: gasLimit,
   };
 
