@@ -66,11 +66,13 @@ async function sendTransaction(nonce) {
   }
   // 获取当前 gasLimit 限制
   const gasLimit = await getGasLimit(hexData, address);
+  // 付费金额
+  const payPrice = config.payPrice
 
   const transaction = {
     to: address,
 	// 替换为你要转账的金额
-    value: ethers.utils.parseEther("0"),
+    value: ethers.utils.parseEther(payPrice),
     // 十六进制数据
     data: hexData,
     // 设置 nonce
