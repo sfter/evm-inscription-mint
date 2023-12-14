@@ -8,6 +8,9 @@ const config = {
     // 每一笔交易停顿多久（毫秒为单位，1000=1秒）
     sleepTime: 1000,
 
+    // 付费金额（默认为 0 转
+    payPrice: "0",
+
     // 你钱包的私钥
     privateKey: "",
 
