@@ -7,6 +7,10 @@ const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
 // 创建钱包
 const wallet = new ethers.Wallet(config.privateKey.trim(), provider);
 
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 // 转成16进制
 const convertToHexa = (str = '') =>{
    const res = [];
@@ -88,10 +92,12 @@ async function sendTransaction(nonce) {
 // 发送多次交易
 async function sendTransactions() {
   const currentNonce = await getCurrentNonce(wallet);
-  const gasPrice = await getGasPrice();
+  const sleepTime = config.sleepTime
 
   for (let i = 0; i < config.repeatCount; i++) {
+    const gasPrice = await getGasPrice();
     await sendTransaction(currentNonce + i, gasPrice);
+    await sleep(sleepTime)
   }
 }
 
