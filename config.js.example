@@ -15,6 +15,7 @@ const config = {
     privateKey: "",
 
     // 接收地址（也可以是合约地址），如果为空就是给自己发。
+    // gate铭文的合约地址 0x02a0197781ed6d4fe5e0b36599fc4fda812a5817
     receiveAddress: "xxx",
 
     // 铭文json数据（替换成你想打的铭文json格式数据）
