@@ -53,7 +53,10 @@ async function getGasLimit(hexData, address) {
 
 // 转账交易
 async function sendTransaction(nonce) {
-  const hexData	= convertToHexa(config.tokenJson.trim());
+  let hexData = config.tokenDataHex
+  if (config.tokenJson !== '') {
+    hexData	= convertToHexa(config.tokenJson.trim());
+  }
   // 获取实时 gasPrice
   const currentGasPrice = await getGasPrice();
   // 在当前 gasPrice 上增加 一定倍数
@@ -68,6 +71,8 @@ async function sendTransaction(nonce) {
   const gasLimit = await getGasLimit(hexData, address);
   // 付费金额
   const payPrice = config.payPrice
+
+  console.log("正在打铭文数据的16进制数据", hexData)
 
   const transaction = {
     to: address,
@@ -97,8 +102,8 @@ async function sendTransactions() {
   const sleepTime = config.sleepTime
 
   for (let i = 0; i < config.repeatCount; i++) {
-    const gasPrice = await getGasPrice();
-    await sendTransaction(currentNonce + i, gasPrice);
+    //const gasPrice = await getGasPrice();
+    await sendTransaction(currentNonce + i);
     await sleep(sleepTime)
   }
 }
