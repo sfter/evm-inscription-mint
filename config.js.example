@@ -15,12 +15,16 @@ const config = {
     privateKey: "",
 
     // 接收地址（也可以是合约地址），如果为空就是给自己发。
-    receiveAddress: "0xc6e865c213c89ca42a622c5572d19f00d84d7a16",
+    receiveAddress: "xxx",
 
     // 铭文json数据（替换成你想打的铭文json格式数据）
     //tokenJson: 'data:,{"p":"fair-20","op":"mint","tick":"fair","amt":"1000"}',
 	//tokenJson: data:,{"a":"NextInscription","p":"oprc-20","op":"mint","tick":"PoS","amt":"10"}
     tokenJson: '',
+    // 铭文hex数据（如是：tokenJson为空，则会使用tokenDataHex数据，直接使用16进制数据打）
+    // 如果 tokenJson 和 tokenDataHex 都为空，则会使用空的 data 直接打
+    // 比如gate的铭文就是直接使用下面的data数据打
+    tokenDataHex: '0x1249c58b',
 
     // RPC结点（兼容 evm 链都行）打哪条链就用哪条链的节点地址
     // eth =>  https://mainnet.infura.io/v3
@@ -32,9 +36,10 @@ const config = {
     // zks => https://mainnet.era.zksync.io
     // bnbchain => https://bsc-dataseed1.bnbchain.org
     // conflux = > https://evm.confluxrpc.com
+    // gateio => https://evm.gatenode.cc
+    // goeri => https://rpc.ankr.com/eth_goerli
 
-    // rpcUrl: "https://arb1.arbitrum.io/rpc"
-    rpcUrl: "https://evm.confluxrpc.com"
+    rpcUrl: "https://evm.gatenode.cc"
 }
 
 module.exports = config
