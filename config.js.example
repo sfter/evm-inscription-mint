@@ -25,7 +25,8 @@ const config = {
     // 铭文hex数据（如是：tokenJson为空，则会使用tokenDataHex数据，直接使用16进制数据打）
     // 如果 tokenJson 和 tokenDataHex 都为空，则会使用空的 data 直接打
     // 比如gate的铭文就是直接使用下面的data数据打
-    tokenDataHex: '0x1249c58b',
+    // gate铭文17进制数据:  0x1249c58b
+    tokenDataHex: '',
 
     // RPC结点（兼容 evm 链都行）打哪条链就用哪条链的节点地址
     // eth =>  https://mainnet.infura.io/v3
