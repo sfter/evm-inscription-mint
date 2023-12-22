@@ -3,7 +3,7 @@ const config = {
     repeatCount: 1000,
 
     // 在当前的 gas 基础上增加多少倍
-    increaseGas: 1.3,
+    increaseGas: 1.2,
 
     // 每一笔交易停顿多久（毫秒为单位，1000=1秒）
     sleepTime: 10,
@@ -22,12 +22,14 @@ const config = {
     //tokenJson: 'data:,{"p":"fair-20","op":"mint","tick":"fair","amt":"1000"}',
 	//tokenJson: data:,{"a":"NextInscription","p":"oprc-20","op":"mint","tick":"PoS","amt":"10"}
     //tokenJson: 'data:,{"p":"grc-20","op":"mint","tick":"gors","amt":"10"}',
-    tokenJson: 'data:,{"p":"xrs-20","op":"mint","tick":"pook","amt":"1000"}',
+    // bevm
+    // data:,{"p":"bm-20","op":"mint","tick":"BMW","amt":"10"}
+    tokenJson: '',
     // 铭文hex数据（如是：tokenJson为空，则会使用tokenDataHex数据，直接使用16进制数据打）
     // 如果 tokenJson 和 tokenDataHex 都为空，则会使用空的 data 直接打
     // 比如gate的铭文就是直接使用下面的data数据打
     // gate铭文17进制数据:  0x1249c58b
-    tokenDataHex: '',
+    tokenDataHex: '0x646174613a2c7b2270223a22626d2d3230222c226f70223a226d696e74222c227469636b223a22424d57222c22616d74223a223130227d',
 
     // RPC结点（兼容 evm 链都行）打哪条链就用哪条链的节点地址
     // eth =>  https://mainnet.infura.io/v3
