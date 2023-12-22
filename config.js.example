@@ -6,7 +6,7 @@ const config = {
     increaseGas: 1.3,
 
     // 每一笔交易停顿多久（毫秒为单位，1000=1秒）
-    sleepTime: 1000,
+    sleepTime: 10,
 
     // 付费金额（默认为 0 转
     payPrice: "0",
@@ -16,12 +16,13 @@ const config = {
 
     // 接收地址（也可以是合约地址），如果为空就是给自己发。
     // gate铭文的合约地址 0x02a0197781ed6d4fe5e0b36599fc4fda812a5817
-    receiveAddress: "xxx",
+    receiveAddress: "",
 
     // 铭文json数据（替换成你想打的铭文json格式数据）
     //tokenJson: 'data:,{"p":"fair-20","op":"mint","tick":"fair","amt":"1000"}',
 	//tokenJson: data:,{"a":"NextInscription","p":"oprc-20","op":"mint","tick":"PoS","amt":"10"}
-    tokenJson: '',
+    //tokenJson: 'data:,{"p":"grc-20","op":"mint","tick":"gors","amt":"10"}',
+    tokenJson: 'data:,{"p":"xrs-20","op":"mint","tick":"pook","amt":"1000"}',
     // 铭文hex数据（如是：tokenJson为空，则会使用tokenDataHex数据，直接使用16进制数据打）
     // 如果 tokenJson 和 tokenDataHex 都为空，则会使用空的 data 直接打
     // 比如gate的铭文就是直接使用下面的data数据打
@@ -37,11 +38,15 @@ const config = {
     // scroll => https://rpc.scroll.io
     // zks => https://mainnet.era.zksync.io
     // bnbchain => https://bsc-dataseed1.bnbchain.org
-    // conflux = > https://evm.confluxrpc.com
-    // gateio => https://evm.gatenode.cc
+    // conflux => https://evm.confluxrpc.com
+    // cronos => https://evm.cronos.org
     // goeri => https://rpc.ankr.com/eth_goerli
+    // iotex => https://babel-api.mainnet.iotex.io
+    // iotex => https://rpc.ankr.com/iotex
+    // bevm => https://rpc-1.bevm.io  https://rpc-2.bevm.io
 
-    rpcUrl: "https://evm.gatenode.cc"
+    rpcUrl: "https://rpc-1.bevm.io"
+    //rpcUrl: "https://rpc-2.bevm.io"
 }
 
 module.exports = config
