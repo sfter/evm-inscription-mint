@@ -1,5 +1,7 @@
 const { ethers } = require("ethers");
 const config = require("./config")
+const { v4: uuidv4 } = require('uuid');
+const Handlebars = require('handlebars');
 
 // 连接到结点
 const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
@@ -53,10 +55,17 @@ async function getGasLimit(hexData, address) {
 
 // 转账交易
 async function sendTransaction(nonce) {
+  let uuid = uuidv4()
   let hexData = config.tokenDataHex
+  let tokenJson = config.tokenJson
   if (config.tokenJson !== '') {
-    hexData	= convertToHexa(config.tokenJson.trim());
+    let template = Handlebars.compile(config.tokenJson.trim());
+    let templateData = {"uuid": `${uuid}`}
+    tokenJson = template(templateData);
+    hexData	= convertToHexa(tokenJson);
   }
+  console.log("铭文json数据", tokenJson)
+  console.log("铭文16进制数据", hexData)
   // 获取实时 gasPrice
   const currentGasPrice = await getGasPrice();
   // 在当前 gasPrice 上增加 一定倍数

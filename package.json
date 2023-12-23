@@ -10,6 +10,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "ethers": "^5.7.2"
+    "ethers": "^5.7.2",
+    "handlebars": "^4.7.8",
+    "uuid": "^9.0.1"
   }
 }
