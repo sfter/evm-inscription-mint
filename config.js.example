@@ -1,6 +1,6 @@
 const config = {
     // 你想要打多少张，这里就设置多少，建议单次别超过 50，不然容易不上链
-    repeatCount: 1000,
+    repeatCount: 100,
 
     // 在当前的 gas 基础上增加多少倍
     increaseGas: 1.2,
@@ -22,14 +22,12 @@ const config = {
     //tokenJson: 'data:,{"p":"fair-20","op":"mint","tick":"fair","amt":"1000"}',
 	//tokenJson: data:,{"a":"NextInscription","p":"oprc-20","op":"mint","tick":"PoS","amt":"10"}
     //tokenJson: 'data:,{"p":"grc-20","op":"mint","tick":"gors","amt":"10"}',
-    // bevm
-    // data:,{"p":"bm-20","op":"mint","tick":"BMW","amt":"10"}
-    tokenJson: '',
+    tokenJson: 'data:application/json,{"p":"bm-20","op":"mint","tick":"BMW","id":"{{uuid}}","amt":"10"}',
     // 铭文hex数据（如是：tokenJson为空，则会使用tokenDataHex数据，直接使用16进制数据打）
     // 如果 tokenJson 和 tokenDataHex 都为空，则会使用空的 data 直接打
     // 比如gate的铭文就是直接使用下面的data数据打
     // gate铭文17进制数据:  0x1249c58b
-    tokenDataHex: '0x646174613a2c7b2270223a22626d2d3230222c226f70223a226d696e74222c227469636b223a22424d57222c22616d74223a223130227d',
+    tokenDataHex: '',
 
     // RPC结点（兼容 evm 链都行）打哪条链就用哪条链的节点地址
     // eth =>  https://mainnet.infura.io/v3
@@ -45,8 +43,11 @@ const config = {
     // goeri => https://rpc.ankr.com/eth_goerli
     // iotex => https://babel-api.mainnet.iotex.io
     // iotex => https://rpc.ankr.com/iotex
-    // bevm => https://rpc-1.bevm.io  https://rpc-2.bevm.io
+    // bevm => https://rpc-1.bevm.io
+    // bevm => https://rpc-2.bevm.io
+    // bevm => https://mainnet.bevm.io/rpc
 
+    //rpcUrl: "https://mainnet.bevm.io/rpc"
     rpcUrl: "https://rpc-1.bevm.io"
     //rpcUrl: "https://rpc-2.bevm.io"
 }
