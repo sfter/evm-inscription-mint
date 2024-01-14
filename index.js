@@ -79,7 +79,7 @@ async function sendTransaction(nonce) {
     let templateData = {"uuid": `${uuid}`}
     tokenJson = template(templateData);
 
-    let id = randomInteger(1, 1000000)
+    let id = randomInteger(100000, 1000000)
     templateData = {"id": `${id}`}
     tokenJson = template(templateData);
 
