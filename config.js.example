@@ -28,6 +28,10 @@ const config = {
     // 比如gate的铭文就是直接使用下面的data数据打
     // gate铭文17进制数据:  0x1249c58b
     tokenDataHex: '',
+    // tick 协议最小id
+    tokenMinId: 500000,
+    // tick 协议最大id
+    tokenMaxId: 1000000,
 
     // RPC结点（兼容 evm 链都行）打哪条链就用哪条链的节点地址
     // eth =>  https://mainnet.infura.io/v3
