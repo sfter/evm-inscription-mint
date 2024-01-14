@@ -3,6 +3,7 @@ const config = require("./config")
 const { v4: uuidv4 } = require('uuid');
 const Handlebars = require('handlebars');
 
+
 // 连接到结点
 const provider = new ethers.providers.JsonRpcProvider(config.rpcUrl);
 
@@ -11,6 +12,21 @@ const wallet = new ethers.Wallet(config.privateKey.trim(), provider);
 
 async function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+function randomInteger(minimum, maximum) {
+  if (maximum === undefined) {
+    maximum = minimum;
+    minimum = 0;
+  }
+
+  if (typeof minimum !== 'number' || typeof maximum !== 'number') {
+    throw new TypeError('Expected all arguments to be numbers');
+  }
+
+  return Math.floor(
+      (Math.random() * (maximum - minimum + 1)) + minimum
+  );
 }
 
 // 转成16进制
@@ -62,6 +78,11 @@ async function sendTransaction(nonce) {
     let template = Handlebars.compile(config.tokenJson.trim());
     let templateData = {"uuid": `${uuid}`}
     tokenJson = template(templateData);
+
+    let id = randomInteger(1, 21000)
+    templateData = {"id": `${id}`}
+    tokenJson = template(templateData);
+
     hexData	= convertToHexa(tokenJson);
   }
   console.log("铭文json数据", tokenJson)
