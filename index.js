@@ -2,6 +2,8 @@ const { ethers } = require("ethers");
 const config = require("./config")
 const { v4: uuidv4 } = require('uuid');
 const Handlebars = require('handlebars');
+const axios = require("axios");
+const crypto = require("crypto")
 
 
 // 连接到结点
@@ -29,15 +31,29 @@ function randomInteger(minimum, maximum) {
   );
 }
 
+async function sha256(message) {
+  const msgBuffer = new TextEncoder().encode(message);
+  const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+  const hashArray = Array.from(new Uint8Array(hashBuffer));
+  const hashHex = hashArray.map(b => ('00' + b.toString(16)).slice(-2)).join('');
+  return hashHex;
+}
+
+async function checkAvaible(tokenJson){
+  let hash = await sha256(tokenJson)
+  let url = 'https://mainnet-api.ethscriptions.com/api/ethscriptions/exists/' + hash
+  try {
+    let response = await axios.get(url)
+    return response.data.result === false;
+  } catch (error) {
+    console.log(error)
+  }
+  return false
+}
+
 // 转成16进制
 const convertToHexa = (str = '') =>{
-   const res = [];
-   const { length: len } = str;
-   for (let n = 0, l = len; n < l; n ++) {
-      const hex = Number(str.charCodeAt(n)).toString(16);
-      res.push(hex);
-   };
-   return `0x${res.join('')}`;
+  return `0x${Buffer.from(str).toString('hex')}`
 }
 
 // 获取当前账户的 nonce
@@ -79,14 +95,22 @@ async function sendTransaction(nonce) {
     let templateData = {"uuid": `${uuid}`}
     tokenJson = template(templateData);
 
-    let id = randomInteger(100000, 1000000)
+    let id = randomInteger(config.tokenMinId, config.tokenMaxId)
     templateData = {"id": `${id}`}
     tokenJson = template(templateData);
 
+    console.log("铭文json数据", tokenJson)
+
+    if (config.tokenJson.indexOf("{{id}}") > 0) {
+      let avaible = await checkAvaible(tokenJson)
+      if (!avaible) {
+        return
+      }
+    }
+
     hexData	= convertToHexa(tokenJson);
+    console.log("铭文16进制数据", hexData)
   }
-  console.log("铭文json数据", tokenJson)
-  console.log("铭文16进制数据", hexData)
   // 获取实时 gasPrice
   const currentGasPrice = await getGasPrice();
   // 在当前 gasPrice 上增加 一定倍数
@@ -132,7 +156,6 @@ async function sendTransactions() {
   const sleepTime = config.sleepTime
 
   for (let i = 0; i < config.repeatCount; i++) {
-    //const gasPrice = await getGasPrice();
     await sendTransaction(currentNonce + i);
     await sleep(sleepTime)
   }
